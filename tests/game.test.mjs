@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 
 class Element {
   constructor(tag='div') {
-    this.tagName=tag; this.children=[]; this.attrs={}; this.dataset=new Proxy({}, {set:(o,k,v)=>{o[k]=String(v);this.attrs['data-'+k]=String(v);return true;}}); this.style={}; this.hidden=false; this.disabled=false; this._text=''; this._value=undefined; this.listeners={};
+    this.tagName=tag; this.children=[]; this.attrs={}; this.dataset=new Proxy({}, {set:(o,k,v)=>{o[k]=String(v);this.attrs['data-'+k.replace(/[A-Z]/g,c=>'-'+c.toLowerCase())]=String(v);return true;}}); this.style={}; this.hidden=false; this.disabled=false; this._text=''; this._value=undefined; this.listeners={};
     this.classList={
       contains:c=>this.className.split(' ').includes(c),
       add:c=>{if(!this.classList.contains(c))this.className+=' '+c;},
@@ -14,7 +14,7 @@ class Element {
     };
   }
   get className(){return this.attrs.class||'';} set className(v){this.attrs.class=v;}
-  setAttribute(k,v){this.attrs[k]=String(v);if(k==='hidden')this.hidden=true;if(k==='disabled')this.disabled=true;if(k.startsWith('data-'))this.dataset[k.slice(5)]=String(v);if(k==='value')this._value=String(v);}
+  setAttribute(k,v){this.attrs[k]=String(v);if(k==='hidden')this.hidden=true;if(k==='disabled')this.disabled=true;if(k.startsWith('data-'))this.dataset[k.slice(5).replace(/-([a-z])/g,(_,c)=>c.toUpperCase())]=String(v);if(k==='value')this._value=String(v);}
   get value(){return this._value??(this.tagName==='select'?this.children[0]?.value:'')??'';} set value(v){this._value=String(v);}
   append(e){this.children.push(e);e.parent=this;}
   replaceChildren(){this.children=[];this._text='';}
@@ -72,11 +72,11 @@ assert.equal(id('opening').hidden,true);
 assert.equal(id('game').hidden,false);
 object('archives');assert.equal(id('modal-title').textContent,'Cached data only');id('close').click();
 object('door');assert.match(id('modal-title').textContent,/Cargo/);id('close').click();
-object('bag');click('[data-take="earpiece"]');click('[data-take="notebook"]');assert.deepEqual(state().items,['earpiece','notebook']);id('close').click();
+click('[data-touch-object="bag"]');assert.ok(id('game').classList.contains('dialog-open'));click('[data-take="earpiece"]');click('[data-take="notebook"]');assert.deepEqual(state().items,['earpiece','notebook']);id('close').click();assert.equal(id('game').classList.contains('dialog-open'),false);
 click('[data-item="earpiece"]');object('porthole');assert.equal(id('modal-title').textContent,'Tune the relay');
 id('lock-relay').click();assert.match(id('puzzle-feedback').textContent,/No lock/);assert.equal(state().connected,false);
 id('frequency').value=73;id('frequency').oninput();assert.match(id('signal-readout').textContent,/100%/);id('lock-relay').click();assert.equal(state().connected,true);id('close').click();
-object('archives');id('search-records').click();assert.match(id('puzzle-feedback').textContent,/all three/);
+id('files-tab').click();click('[data-touch-object="archives"]');id('search-records').click();assert.match(id('puzzle-feedback').textContent,/all three/);
 id('branch').value='fleet';id('period').value='between';id('training').value='precision';id('search-records').click();assert.match(id('puzzle-feedback').textContent,/No relevant/);
 id('branch').value='special';id('search-records').click();assert.ok(doc.getElementById('save-record'));assert.equal(state().archives,false);id('save-record').click();assert.equal(state().archives,true);id('close').click();
 object('timeline');click('[data-event="kill"]');click('[data-event="record"]');click('[data-event="war"]');action('Verify sequence');assert.match(id('puzzle-feedback').textContent,/conflicts/);assert.equal(state().timeline,false);

@@ -9,10 +9,15 @@ SCENE = "corlex-cargo-berth-concept.png"
 COVER = "cover.png"
 
 
-def build_game_html(root: Path = ROOT) -> str:
+def build_game_html(root: Path = ROOT, *, device_hint: str = "unknown", layout_mode: str = "auto") -> str:
     """Inline only the game's trusted local files; never load the manuscript."""
     page = (root / "index.html").read_text(encoding="utf-8-sig")
-    for filename in ("style.css", "interactions.css", "opening.css"):
+    if device_hint not in {"phone", "tablet", "desktop", "unknown"}:
+        raise ValueError("Invalid device hint")
+    if layout_mode not in {"auto", "mobile", "desktop"}:
+        raise ValueError("Invalid layout mode")
+    page = page.replace('<html lang="en">', f'<html lang="en" data-device-hint="{device_hint}" data-layout-mode="{layout_mode}">')
+    for filename in ("style.css", "interactions.css", "opening.css", "mobile.css"):
         css = (root / filename).read_text(encoding="utf-8-sig")
         css = css.replace(f"url('{SCENE}')", "var(--scene-image)")
         css = css.replace(f'url("{SCENE}")', "var(--scene-image)")
@@ -49,4 +54,6 @@ body { justify-content: flex-start; }
         '<script src="game-v2.js"></script>',
         f"<script>\n{bootstrap}{script}\n</script>",
     )
+    device_script = (root / "device.js").read_text(encoding="utf-8-sig").replace("</script", "<\\/script")
+    page = page.replace('<script src="device.js"></script>', f"<script>\n{device_script}\n</script>")
     return page

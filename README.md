@@ -13,6 +13,14 @@ The Streamlit wrapper uses `st.iframe` and bundles the artwork, styles, and Java
 
 The game opens on the book cover with instructions and a Begin investigation button. Returning players see Continue investigation. The Title screen link returns to the cover without clearing progress.
 
+## Phone, tablet, and desktop layouts
+
+Automatic mode uses Streamlit request headers for an initial device hint. The embedded game refines that hint with its viewport, browser user agent, and touch support, and responds to screen rotation or resizing. This is device/layout detection, not player identification. Nothing about the device is added to the saved game.
+
+On phones and tablets, the artwork appears above large action buttons, labeled inventory slots, and Room objects / Holographic files target lists. All puzzles use readable text and touch controls. Dialogs replace the room temporarily and scroll with the page. Desktop keeps the original illustrated HUD.
+
+Open **Display & controls** below the Streamlit game to override Automatic with Touch / mobile or Desktop. A narrow desktop window can use the touch layout too. On standalone `index.html`, automatic browser detection works without Streamlit.
+
 ## Play without Streamlit
 
 Open `index.html` in a modern desktop browser. No installation or server is needed. Keep the scene PNG and the HTML, CSS, and JavaScript files together. Reload an already open tab to load the rebuilt version.

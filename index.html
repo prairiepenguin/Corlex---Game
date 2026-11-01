@@ -7,8 +7,10 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="interactions.css">
   <link rel="stylesheet" href="opening.css">
+  <link rel="stylesheet" href="mobile.css">
 </head>
 <body>
+<p id="device-status" class="device-status" aria-live="polite"></p>
 <section id="opening" aria-labelledby="opening-title">
   <div class="opening-art"><img id="cover-art" src="cover.png" alt="Corlex book cover featuring the Reaper in plum and magenta against a pale golden backdrop."></div>
   <div class="opening-copy">
@@ -29,21 +31,32 @@
   </div>
 </section>
 <main id="game" aria-label="Corlex cargo berth adventure" hidden>
+  <div class="room-stage"><div class="room-inner">
   <img id="scene" src="corlex-cargo-berth-concept.png" alt="Corlex studies holographic clues in his battered cargo berth aboard the Death Bringer.">
   <div id="hotspots" aria-label="Objects in the room"></div>
-  <div id="objective-bar"><span id="objective"></span><b id="progress"></b></div>
   <div id="signal-label">NO HYPERNET CONNECTION</div>
-  <div id="click-ring"></div><div id="pickup"></div>
-  <button id="journal" class="journal">▧ &nbsp; JOURNAL</button>
   <div id="hover" aria-hidden="true">Examine holo-cube</div>
+  </div></div>
+  <div id="objective-bar"><span id="objective"></span><b id="progress"></b></div>
+  <div id="click-ring"></div><div id="pickup"></div>
+  <div class="game-toolbar">
+  <button id="journal" class="journal">▧ &nbsp; JOURNAL</button>
+  <button id="mobile-mike" type="button">Talk to Mike</button>
+  <button id="help" title="Show controls and hotspot hints" aria-label="Show controls and hotspot hints">?</button>
+  </div>
   <div class="verbs" aria-label="Actions">
     <button data-verb="look" class="active" aria-pressed="true">LOOK</button>
     <button data-verb="use" aria-pressed="false">USE</button>
     <button data-verb="talk" aria-pressed="false">TALK</button>
   </div>
   <div id="inventory" aria-label="Inventory"></div>
+  <div id="selected-item" aria-live="polite"></div>
+  <section id="touch-controls" aria-label="Room objects">
+    <div class="touch-tabs" role="group" aria-label="Object categories"><button id="room-tab" type="button" aria-pressed="true">Room objects</button><button id="files-tab" type="button" aria-pressed="false">Holographic files</button></div>
+    <p class="touch-tip">Tap the scene or choose an object below.</p>
+    <div id="touch-targets"></div>
+  </section>
   <div id="speech" role="status" aria-live="polite"><strong id="speaker">MIKE</strong><span id="line">Ready when you are, boss.</span></div>
-  <button id="help" title="Show controls and hotspot hints" aria-label="Show controls and hotspot hints">?</button>
   <div id="toast" role="status" hidden><b id="toast-speaker"></b><p id="toast-line"></p><button id="dismiss-toast" aria-label="Dismiss dialogue">×</button></div>
   <div id="modal" class="veil" hidden>
     <section role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -57,6 +70,7 @@
   <div id="departure" class="veil" hidden><section><p class="eyebrow">INVESTIGATION COMPLETE</p><h1>Next stop: Titan.</h1><p>The door slides open. Corlex pockets the case file and steps into the tanker’s cold corridor.</p><p class="success">Amanda. Special Forces. The Reaper.</p><p>You have a name. Now you have to find her.</p><button id="return-room" class="large-action">Return to the berth</button></section></div>
 </main>
 <p id="game-instructions" class="instructions" hidden>Click to investigate · Select an item, then an object to use it · <kbd>1</kbd> Look <kbd>2</kbd> Use <kbd>3</kbd> Talk · <kbd>H</kbd> Hints · <kbd>J</kbd> Journal · <kbd>Esc</kbd> Cancel · <button id="title-screen" type="button">Title screen</button></p>
+<script src="device.js"></script>
 <script src="game-v2.js"></script>
 </body>
 </html>

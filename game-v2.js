@@ -13,6 +13,17 @@ const objects=[
 ['matches','Image matches',66.4,10.7,16,21],['network','Hypernet terminal',66.4,32.3,16,15.5],['cube','Holo-cube',55.5,48.8,7.8,8.6],
 ['door','Cargo door',85.3,10,14.5,70],['mike','Mike',68.7,85,9,12]];
 const stages=['connected','archives','timeline','matches','dossier'];
+let touchGroup='room';
+function renderTouchTargets(){
+$('selected-item').textContent=selected?'Selected: '+names[selected]+' — tap a target below.':'Select an inventory item to use it on an object.';
+$('room-tab').setAttribute('aria-pressed',String(touchGroup==='room'));$('files-tab').setAttribute('aria-pressed',String(touchGroup==='files'));
+$('touch-targets').replaceChildren();
+const files=['archives','timeline','dossier','matches','network','cube'];
+objects.filter(([id])=>id!=='mike'&&(touchGroup==='files'?files.includes(id):!files.includes(id))).forEach(([id,label])=>{
+const b=document.createElement('button');b.type='button';b.dataset.touchObject=id;b.textContent=(s[id]?'✓ ':'')+label;
+b.setAttribute('aria-label',selected?'Use '+names[selected]+' on '+label:label);b.onclick=()=>interact(id);$('touch-targets').append(b);
+});
+}
 function objective(){
 if(!has('earpiece')||!has('notebook'))return 'Search your duffel for equipment';
 if(!s.connected)return 'Get Mike a live hypernet connection';
@@ -33,16 +44,17 @@ $('signal-label').textContent=s.connected?'RELAY LINK ACTIVE':'NO HYPERNET CONNE
 $('game').classList.toggle('connected',s.connected);$('game').classList.toggle('lamp-off',!s.lamp);$('game').classList.toggle('door-open',s.finished);
 document.querySelectorAll('.hotspot').forEach(b=>b.classList.toggle('solved',!!s[b.dataset.object]||b.dataset.object==='cap'&&has('cap')));
 $('inventory').replaceChildren();
-s.items.forEach(i=>{const b=document.createElement('button');b.className='item'+(selected===i?' selected':'');b.dataset.item=i;b.title=names[i];b.setAttribute('aria-label','Select '+names[i]);b.setAttribute('aria-pressed',String(selected===i));if(i==='pass')b.innerHTML='<span class="pass-icon">DB<br>TRANSIT</span>';b.onclick=()=>{selected=selected===i?null:i;verb='use';render();$('hover').textContent=selected?'Use '+names[i]+' on...':'Choose an object';say(selected?names[i]+' selected. Click an object to use it, or click the item again to put it away.':'Item put away.');};$('inventory').append(b);});
+s.items.forEach(i=>{const b=document.createElement('button');b.className='item'+(selected===i?' selected':'');b.dataset.item=i;b.title=names[i];b.setAttribute('aria-label','Select '+names[i]);b.setAttribute('aria-pressed',String(selected===i));if(i==='pass')b.innerHTML='<span class="pass-icon">DB<br>TRANSIT</span>';const label=document.createElement('span');label.className='inventory-label';label.textContent=names[i];b.append(label);b.onclick=()=>{selected=selected===i?null:i;verb='use';render();$('hover').textContent=selected?'Use '+names[i]+' on...':'Choose an object';say(selected?names[i]+' selected. Click an object to use it, or click the item again to put it away.':'Item put away.');};$('inventory').append(b);});
 for(let n=s.items.length;n<4;n++){const e=document.createElement('div');e.className='empty';if(!n)e.innerHTML='<span>SEARCH<br>YOUR BAG</span>';$('inventory').append(e);}
+renderTouchTargets();
 }
 function show(title,html,actions=[],wide=false){
 if($('modal').hidden)lastFocus=document.activeElement;
 $('toast').hidden=true;$('modal-title').textContent=title;$('modal-body').innerHTML=html;$('modal-actions').replaceChildren();$('modal').classList.toggle('wide',wide);
 actions.forEach(([text,fn])=>{const b=document.createElement('button');b.textContent=text;b.onclick=fn;$('modal-actions').append(b);});
-$('modal').hidden=false;$('close').focus();
+$('modal').hidden=false;$('game').classList.add('dialog-open');$('close').focus();
 }
-function close(){$('modal').hidden=true;lastFocus?.focus();}
+function close(){$('modal').hidden=true;$('game').classList.remove('dialog-open');lastFocus?.focus();}
 function feedback(t,good=false){$('puzzle-feedback').textContent=t;$('puzzle-feedback').className=good?'feedback success':'feedback';}
 function collect(i){if(has(i))return;s.items.push(i);record('Collected: '+names[i]+'.');$('pickup').textContent='+ '+names[i];$('pickup').classList.remove('pop');void $('pickup').offsetWidth;$('pickup').classList.add('pop');}
 function detail(type,text){return '<div class="closeup '+type+'"><span>'+text+'</span></div>';}
@@ -115,7 +127,7 @@ show("Corlex's field notebook",'<p class="reward">THE REAPER / 100,000 CREDITS</
 function door(){
 if(!s.dossier){show('Cargo deck access',detail('door-detail','The old motors are quiet. For now.')+'<p>I need a lead before we reach Titan. Finish the investigation first.</p><p class="small">NEXT: '+objective()+'</p>',[['Back to room',close],['Check notebook',journal]]);return;}
 if(!has('pass')){show('Passenger credential required','<div class="access-reader">CARGO 04<br><span>INSERT TRANSIT PASS</span></div><p>The door needs your transit pass. It is not in the duffel. Maybe it slipped out where you slept.</p>',[['Check the bunk',bed],['Back to room',close]]);return;}
-show('Ready to leave?','<div class="access-reader granted">C. CORLEX<br><span>PASSENGER VERIFIED</span></div><p>Case file saved. Pass accepted. '+(has('cap')?'Mom’s cap is packed.':'Your cap is still on the bunk, if you want it.')+'</p><p>The Reaper is somewhere on Titan.</p>',[['Press door release',()=>{s.finished=true;record('Cargo door released. Next stop: Titan.');close();$('departure').hidden=false;$('return-room').focus();}],['Stay a little longer',close]]);
+show('Ready to leave?','<div class="access-reader granted">C. CORLEX<br><span>PASSENGER VERIFIED</span></div><p>Case file saved. Pass accepted. '+(has('cap')?'Mom’s cap is packed.':'Your cap is still on the bunk, if you want it.')+'</p><p>The Reaper is somewhere on Titan.</p>',[['Press door release',()=>{s.finished=true;record('Cargo door released. Next stop: Titan.');close();$('departure').hidden=false;$('game').classList.add('dialog-open');$('return-room').focus();}],['Stay a little longer',close]]);
 }
 function use(i,id){
 if(i==='earpiece'&&['porthole','network','cube'].includes(id)){network();return;}
@@ -138,7 +150,10 @@ objects.forEach(([id,label,x,y,w,h])=>{const b=document.createElement('button');
 function setVerb(v){verb=v;selected=null;render();$('hover').textContent=v.toUpperCase()+' — choose an object';}
 document.querySelectorAll('[data-verb]').forEach(b=>b.onclick=()=>setVerb(b.dataset.verb));
 $('journal').onclick=journal;$('close').onclick=close;$('dismiss-toast').onclick=()=>$('toast').hidden=true;
-$('return-room').onclick=()=>{$('departure').hidden=true;$('journal').focus();};
+$('return-room').onclick=()=>{$('departure').hidden=true;$('game').classList.remove('dialog-open');$('journal').focus();};
+$('mobile-mike').onclick=mike;
+$('room-tab').onclick=()=>{touchGroup='room';renderTouchTargets();};
+$('files-tab').onclick=()=>{touchGroup='files';renderTouchTargets();};
 function help(){$('game').classList.toggle('hints');say('Objects open close-ups. Collect gear from the duffel. Select an inventory item, then a target. Click Mike for conversation and hints.','MIKE');}
 $('help').onclick=help;
 $('game').addEventListener('click',e=>{if(e.target===$('scene')||e.target===$('hotspots')){pulse(e);selected=null;render();say('Choose an object to investigate. Press H to reveal the room’s interactive objects.');}});
@@ -150,7 +165,7 @@ if(panel){if(e.key==='Tab'){const f=[...panel.querySelectorAll('button:not(:disa
 if(['1','2','3'].includes(e.key))setVerb({1:'look',2:'use',3:'talk'}[e.key]);if(e.key.toLowerCase()==='j')journal();if(e.key.toLowerCase()==='h')help();
 });
 function opening(){
-selected=null;render();$('modal').hidden=true;$('departure').hidden=true;$('toast').hidden=true;
+selected=null;render();$('modal').hidden=true;$('departure').hidden=true;$('toast').hidden=true;$('game').classList.remove('dialog-open');
 $('game').hidden=true;$('game-instructions').hidden=true;$('opening').hidden=false;
 $('start-game').textContent=s.log.length?'Continue investigation →':'Begin investigation →';
 $('opening-save').textContent=s.log.length?'Your saved investigation is ready to continue.':'Your progress saves automatically in this browser.';

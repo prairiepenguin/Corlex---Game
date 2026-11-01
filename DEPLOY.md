@@ -14,12 +14,15 @@ If a private repository is missing, grant Streamlit access to that repository in
 
 - `streamlit_app.py`
 - `game_bundle.py`
+- `device_layout.py`
 - `requirements.txt`
 - `.streamlit/config.toml`
 - `index.html`
 - `style.css`
 - `interactions.css`
 - `opening.css`
+- `mobile.css`
+- `device.js`
 - `game-v2.js`
 - `corlex-cargo-berth-concept.png`
 - `cover.png`
@@ -36,9 +39,12 @@ python -m streamlit run streamlit_app.py
 ```sh
 python -m unittest discover -s tests -p "test_*.py"
 node tests/game.test.mjs
+node tests/device.test.mjs
 ```
 
 The Python checks verify Streamlit startup and asset bundling. The JavaScript checks verify game interactions with a DOM fixture. They do not replace visual testing in a browser. GitHub Actions runs both on pushes and pull requests.
+
+Automatic device detection runs for each visitor. Request headers provide the initial hint; browser checks choose and update the layout. Visitors can override the layout under Display & controls. No API keys or device-detection service are needed.
 
 ## Release ZIP
 
@@ -51,4 +57,5 @@ This writes `dist/corlex-game.zip` from an explicit list of application files. I
 ## References
 
 - Streamlit iframe API: https://docs.streamlit.io/develop/api-reference/text/st.iframe
+- Streamlit session headers: https://docs.streamlit.io/1.58.0/develop/api-reference/caching-and-state/st.context
 - Streamlit deployment guide: https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy
