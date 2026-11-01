@@ -1,15 +1,27 @@
 import base64
 import re
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from streamlit.testing.v1 import AppTest
 
 from game_bundle import ROOT, SCENE, COVER, TENGRA, AFTERMATH, build_game_html
 from device_layout import detect_device
+import game_bundle
 
 
 class StreamlitGameTests(unittest.TestCase):
+    def test_cloud_rerun_refreshes_a_stale_bundler_import(self):
+        def old_build_game_html():
+            return "<p>Old bundler with no device/layout parameters</p>"
+
+        with patch.object(game_bundle, "build_game_html", old_build_game_html):
+            app = AppTest.from_file(str(ROOT / "streamlit_app.py"), default_timeout=20).run()
+            self.assertEqual(len(app.exception), 0, str(app.exception))
+            self.assertIn('data-layout-mode="auto"', app.get("iframe")[0].proto.srcdoc)
+            self.assertIn('id="tengra-demo"', app.get("iframe")[0].proto.srcdoc)
+
     def test_device_detection(self):
         cases = [
             ({"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18) Mobile"}, "phone"),

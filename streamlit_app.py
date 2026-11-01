@@ -1,9 +1,15 @@
 """Run with: python -m streamlit run streamlit_app.py"""
 
+import importlib
+
 import streamlit as st
 
-from game_bundle import build_game_html
+import game_bundle
 from device_layout import detect_device
+
+# Cloud can rerun this entrypoint after a Git update while retaining an older
+# imported game_bundle module. Refresh it before binding its current function.
+build_game_html = importlib.reload(game_bundle).build_game_html
 
 
 def main() -> None:
