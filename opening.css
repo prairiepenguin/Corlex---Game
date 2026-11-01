@@ -1,0 +1,21 @@
+/* Cover-led opening screen, shared by the browser and Streamlit versions. */
+#opening{width:min(1100px,100%);display:grid;grid-template-columns:minmax(240px,.88fr) minmax(330px,1.25fr);margin:24px auto;background:linear-gradient(135deg,#2d1b35,#18101f 75%);border:1px solid #795a75;box-shadow:0 20px 90px #0007;overflow:hidden}
+.opening-art{background:#21112d;display:flex;align-items:center;justify-content:center;border-right:1px solid #73536d}
+#cover-art{display:block;width:100%;height:auto;max-width:460px}
+.opening-copy{padding:clamp(22px,3.5vw,46px);align-self:center;font:15px/1.6 Georgia,serif}
+.opening-kicker{color:var(--pink);font:11px/1.5 Arial,sans-serif;letter-spacing:.2em;margin:0 0 8px}
+#opening-title{font:normal clamp(42px,6vw,68px)/1 Georgia,serif;margin:0 0 8px;color:var(--cream)}
+.opening-subtitle{font:14px/1.5 Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:#d5b89b;margin:0 0 22px}
+.opening-story{color:#c1aecb;font-style:italic;margin-bottom:22px}
+.opening-copy h2{font:normal 20px Georgia,serif;color:var(--cream);margin:20px 0 8px}
+.opening-copy p{margin-top:0}
+.opening-steps{padding-left:20px;margin:18px 0;color:#cdbed2}
+.opening-steps li{padding-left:4px;margin-bottom:9px}
+.opening-steps strong{color:var(--cream)}
+.opening-help{padding:13px 15px;background:#38243e;border-left:2px solid var(--pink);font:13px/1.7 Arial,sans-serif;color:#d5c6db}
+#start-game{width:100%;padding:14px 20px;border:1px solid #eed5a1;background:var(--cream);color:#28182e;display:flex;align-items:center;justify-content:space-between;text-align:left;font:bold 15px/1.4 Arial,sans-serif;letter-spacing:.03em;transition:background .15s,transform .15s}
+#start-game:hover{background:#fff0cb;transform:translateY(-1px)}
+#opening-save{font:11px/1.6 Arial,sans-serif;text-align:center;color:#ac98b5;margin:10px 0 0}
+#title-screen{background:transparent;border:0;border-bottom:1px solid #9b7a93;padding:0 2px;color:var(--cream);font:inherit}
+#title-screen:hover{color:var(--cyan)}
+@media(max-width:680px){#opening{grid-template-columns:1fr;max-width:520px;margin:0 auto}.opening-art{border-right:0;border-bottom:1px solid #73536d;padding:16px;background:radial-gradient(ellipse,#49304c,#21112d)}#cover-art{width:54%;max-width:260px;box-shadow:0 10px 30px #0007}.opening-copy{padding:24px;font-size:14px}#opening-title{font-size:42px}.opening-subtitle{font-size:12px;margin-bottom:16px}.opening-story{margin-bottom:16px}}

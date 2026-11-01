@@ -1,0 +1,22 @@
+# Local Python environments, secrets, and build products
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+.streamlit/secrets.toml
+dist/
+*.log
+
+# Book/reference material is not needed to deploy the game.
+/Corlex - Cat.md
+/scene-prompt.txt
+/game.js
+
+# Machine-specific configuration
+.codex/
+.agents/
+.aws/
+.DS_Store
+Thumbs.db
