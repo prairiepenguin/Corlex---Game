@@ -158,7 +158,7 @@ function help(){$('game').classList.toggle('hints');say('Objects open close-ups.
 $('help').onclick=help;
 $('game').addEventListener('click',e=>{if(e.target===$('scene')||e.target===$('hotspots')){pulse(e);selected=null;render();say('Choose an object to investigate. Press H to reveal the room’s interactive objects.');}});
 document.addEventListener('keydown',e=>{
-if(!$('opening').hidden)return;
+if(!$('opening').hidden||$('game').hidden)return;
 if(e.key==='Escape'){if(!$('departure').hidden)$('return-room').click();else if(!$('modal').hidden)close();else{selected=null;$('toast').hidden=true;render();}return;}
 const panel=!$('departure').hidden?$('departure'):!$('modal').hidden?$('modal'):null;
 if(panel){if(e.key==='Tab'){const f=[...panel.querySelectorAll('button:not(:disabled),select,input')],first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}return;}
@@ -167,6 +167,7 @@ if(['1','2','3'].includes(e.key))setVerb({1:'look',2:'use',3:'talk'}[e.key]);if(
 function opening(){
 selected=null;render();$('modal').hidden=true;$('departure').hidden=true;$('toast').hidden=true;$('game').classList.remove('dialog-open');
 $('game').hidden=true;$('game-instructions').hidden=true;$('opening').hidden=false;
+$('tengra-demo').hidden=true;
 $('start-game').textContent=s.log.length?'Continue investigation →':'Begin investigation →';
 $('opening-save').textContent=s.log.length?'Your saved investigation is ready to continue.':'Your progress saves automatically in this browser.';
 $('start-game').focus();

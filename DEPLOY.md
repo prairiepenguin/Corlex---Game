@@ -23,6 +23,10 @@ If a private repository is missing, grant Streamlit access to that repository in
 - `opening.css`
 - `mobile.css`
 - `device.js`
+- `tengra.css`
+- `tengra.js`
+- `tengra-apartment.png`
+- `tengra-aftermath.png`
 - `game-v2.js`
 - `corlex-cargo-berth-concept.png`
 - `cover.png`
@@ -40,6 +44,7 @@ python -m streamlit run streamlit_app.py
 python -m unittest discover -s tests -p "test_*.py"
 node tests/game.test.mjs
 node tests/device.test.mjs
+node tests/tengra.test.mjs
 ```
 
 The Python checks verify Streamlit startup and asset bundling. The JavaScript checks verify game interactions with a DOM fixture. They do not replace visual testing in a browser. GitHub Actions runs both on pushes and pull requests.

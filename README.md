@@ -1,5 +1,7 @@
 # Corlex — Death Bringer
 
+The cover now offers two playable demos. Choose **Play the confrontation** for the Tengra apartment standoff with Amanda, or **Begin investigation** for the Death Bringer cargo room. They have separate saves. See [TENGRA_DEMO.md](TENGRA_DEMO.md) for controls, adaptation notes, and the confrontation walkthrough.
+
 ## Run with Streamlit
 
 ```sh

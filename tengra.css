@@ -1,0 +1,115 @@
+.demo-choice{padding:18px;margin:18px 0 24px;border:1px solid #a37699;background:linear-gradient(130deg,#422340,#241a32)}
+.opening-copy .demo-choice h2{margin:6px 0 10px;font-size:25px}
+.demo-label{font:10px/1.5 Arial,sans-serif!important;letter-spacing:.14em;color:var(--pink);margin:0 0 8px!important}
+#start-tengra{width:100%;min-height:48px;padding:12px 16px;background:#d8e5d1;border:1px solid #c6e9df;color:#18292c;font:bold 15px Arial,sans-serif;text-align:left}
+#start-tengra:hover{background:#e7f6df}
+.demo-choice small{display:block;font:11px/1.6 Arial,sans-serif;color:#c1adc9;margin-top:8px}
+#tengra-demo{--tg-gold:#ebd4a3;--tg-cyan:#91d8d5;position:relative;width:min(1440px,100%);margin:0 auto;background:#19111f;border:1px solid #684761;color:#f1dfbc;font:15px/1.6 Georgia,serif}
+#tengra-demo button{min-height:44px;border:1px solid #8c6787;background:#35203a;padding:10px 14px;border-radius:3px;font:14px/1.45 Arial,sans-serif;color:#f1dfbc;transition:background .15s,border-color .15s}
+#tengra-demo button:hover{background:#51314e;border-color:#d6a8c8}
+#tengra-demo button:focus-visible{outline:3px solid #9bebe0;outline-offset:2px}
+#tengra-demo button:disabled{opacity:.45;cursor:default}
+.tg-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;border-bottom:1px solid #65415f;background:linear-gradient(110deg,#302036,#19121f)}
+.tg-heading p,.tg-eyebrow{font:11px/1.5 Arial,sans-serif;letter-spacing:.16em;color:#d78ab4;margin:0 0 6px}
+.tg-heading h1{font:normal 32px/1.2 Georgia,serif;margin:0;color:#f0d4a3}
+.tg-header-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tg-status{display:flex;justify-content:space-between;gap:20px;padding:10px 24px;font:12px/1.6 Arial,sans-serif;background:#21182a;color:#c7e3d9}
+#tg-pressure{white-space:nowrap;font:10px/1.8 monospace;letter-spacing:.07em;color:#c8b7ce}
+#tg-pressure[data-heat="2"]{color:#efb180}
+.tg-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px}
+.tg-scene-column{min-width:0;background:#100b17}
+.tg-stage{position:relative;aspect-ratio:1672/941;overflow:hidden;isolation:isolate}
+#tg-art{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s,opacity 1s;transform-origin:34% 18%;pointer-events:none}
+#tg-aftermath{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.3s;pointer-events:none}
+.tg-stage:after{content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 -25px 50px #0d081d66;z-index:2}
+#tg-hotspots{position:absolute;inset:0;z-index:3}
+#tengra-demo .tg-hotspot{position:absolute;padding:0;min-height:0;background:transparent;border:1px solid transparent;cursor:crosshair;border-radius:8px}
+#tengra-demo .tg-hotspot:hover,#tengra-demo .tg-hotspot:focus-visible,.show-hotspots .tg-hotspot{background:#a1ddd51c;border-color:#c4f4e4}
+.tg-hotspot.observed:after{content:'◆';position:absolute;right:5%;top:3%;padding:2px 5px;background:#17363ac9;color:#b5eadb;font:12px Arial,sans-serif;border-radius:3px}
+.tg-sound-field{position:absolute;left:41%;top:32%;width:39%;height:50%;border:1px dashed #8ddad699;border-radius:50%;background:radial-gradient(ellipse,#78dbd211,transparent 70%);opacity:0;transition:opacity .5s;pointer-events:none;z-index:1}
+.field-mapped .tg-sound-field{opacity:1}
+#tg-scene-label{position:absolute;left:12px;bottom:10px;max-width:80%;background:#17101ee0;border-left:2px solid #c597b4;padding:5px 10px;font:11px/1.5 Arial,sans-serif;z-index:4;pointer-events:none}
+.tg-inventory{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 16px;background:#24172d;border-block:1px solid #62425f}
+.tg-inventory>span:first-child{font:10px Arial,sans-serif;letter-spacing:.1em;color:#b99dbb;margin-right:4px}
+#tengra-demo .tg-inventory button[aria-pressed=true]{background:#d9d9b4;color:#211c2c;border-color:#c1e7d9}
+#tg-selection{font:11px/1.5 Arial,sans-serif;color:#c9b2ce;margin-left:auto}
+.tg-targets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:12px 16px}
+#tengra-demo .tg-targets button{min-height:42px;text-align:left;font:12px/1.5 Arial,sans-serif;padding:8px 10px;background:#27182f}
+.tg-case{padding:22px 20px;background:linear-gradient(135deg,#2d1c31,#201527);border-left:1px solid #67415e}
+.tg-case h2{font:normal 27px/1.2 Georgia,serif;margin:8px 0 22px;color:#e8c99b}
+#tg-clues{list-style:none;padding:0;margin:0 0 20px}
+#tg-clues li{padding:10px 0;border-bottom:1px solid #5d3d59;font:13px/1.6 Arial,sans-serif;color:#ad96b1}
+#tg-clues .tg-done{color:#b6e2d4}
+.tg-case button{width:100%;margin:0 0 8px}
+#tengra-demo #tg-plan{background:#d9c697;color:#251a2c;border-color:#e3cea0;font-weight:bold}
+#tengra-demo #tg-reset{border-color:transparent;background:transparent;font-size:11px;color:#b89eb9;min-height:36px}
+.tg-small{font:11px/1.6 Arial,sans-serif;color:#ab94b1}
+.tg-dialogue{padding:20px 24px;border-top:1px solid #75516b;background:linear-gradient(100deg,#302035,#1c1526)}
+#tg-line{font:19px/1.5 Georgia,serif;margin:8px 0 18px;min-height:30px}
+#tg-choices{display:flex;gap:8px;flex-wrap:wrap}
+#tengra-demo #tg-choices button{flex:1 1 180px;text-align:left;background:#342438}
+.tg-detail{position:absolute;inset:0;z-index:12;background:#100a1bdb;backdrop-filter:blur(4px);display:grid;place-items:center;padding:24px}
+.tg-detail>section{position:relative;width:min(700px,100%);max-height:95%;overflow:auto;padding:34px;background:linear-gradient(140deg,#332038,#1c1628);border:1px solid #bf9b84;box-shadow:0 20px 70px #000a}
+.tg-detail h2{font:normal 28px/1.25 Georgia,serif;margin:10px 40px 20px 0}
+.tg-detail p{font:16px/1.7 Georgia,serif}
+#tengra-demo #tg-close{position:absolute;top:8px;right:8px;min-width:44px;font-size:26px;background:#29192f}
+#tg-detail-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+#tg-detail-actions button{flex:1 1 180px}
+.tg-closeup{height:200px;background-image:url('tengra-apartment.png');background-size:1100px auto;background-repeat:no-repeat;border:1px solid #8c6883;box-shadow:inset 0 -20px 30px #0c081c66}
+.tg-crop-emitter{background-size:2100px auto;background-position:-1020px -475px}
+.tg-crop-clock{background-size:1500px auto;background-position:-195px -20px}
+.tg-crop-island{background-position:-160px -220px}
+.tg-crop-door{background-position:0 -10px}
+.tg-crop-arm{background-size:1400px auto;background-position:-575px -140px}
+.tg-crop-window{background-position:-440px -25px}
+.tg-crop-rifle{background-size:1300px auto;background-position:-650px -210px}
+#tg-cinematic{position:absolute;inset:auto 0 0;z-index:5;padding:55px 24px 24px;background:linear-gradient(transparent,#100919ed 45%);pointer-events:none}
+#tg-beat-kicker{font:10px/1.5 Arial,sans-serif;letter-spacing:.18em;color:#a5e3db;margin:0 0 6px}
+#tg-beat-title{font:normal clamp(22px,3vw,42px)/1.1 Georgia,serif;color:#f1d5a2;margin:0 0 12px}
+#tg-beat-text{max-width:550px;font:14px/1.6 Georgia,serif;margin:0;color:#d8c4db}
+.tg-stage[data-phase=wait] #tg-art{transform:scale(1.075)}
+.tg-stage[data-phase=glance] #tg-art{transform:scale(1.04)}
+.tg-stage[data-phase=turned] #tg-art{transform:scale(1.02);transform-origin:10% 40%}
+.tg-stage[data-phase=finished] #tg-art{opacity:0}
+.tg-stage[data-phase=finished] #tg-aftermath{opacity:1}
+.tg-stage[data-phase=finished] #tg-hotspots{display:none}
+.tg-stage[data-phase=finished] #tg-cinematic{padding-top:40px;background:linear-gradient(transparent,#130b1ded)}
+#tg-cup-flight{position:absolute;left:44%;top:42%;font:22px Georgia,serif;color:#f9e5a9;z-index:7;pointer-events:none;opacity:0}
+.tg-stage[data-phase=turned] #tg-cup-flight{animation:tg-cup .75s ease-out forwards}
+@keyframes tg-cup{0%{opacity:1;left:44%;top:42%;transform:rotate(0)}50%{top:16%}95%{opacity:1}100%{opacity:0;left:5%;top:39%;transform:rotate(-560deg)}}
+.mobile-ui #tengra-demo{width:100%;border-inline:0;font-size:16px}
+.mobile-ui .tg-layout{grid-template-columns:1fr}
+.mobile-ui .tg-heading{padding:16px;gap:10px}
+.mobile-ui .tg-header-actions{flex-direction:column;min-width:100px}
+.mobile-ui .tg-heading h1{font-size:25px}
+.mobile-ui .tg-heading p{font-size:10px}
+.mobile-ui #tengra-demo button{font-size:15px;min-height:48px}
+.mobile-ui .tg-status{padding:12px 16px;gap:8px;flex-direction:column;font-size:13px}
+.mobile-ui .tg-case{border-left:0;border-top:1px solid #67415e;padding:18px 16px}
+.mobile-ui .tg-case h2{font-size:24px;margin:6px 0 14px}
+.mobile-ui #tg-clues{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;margin-bottom:16px}
+.mobile-ui #tg-clues li{font-size:12px;padding:9px 0}
+.mobile-ui .tg-small{font-size:12px}
+.mobile-ui .tg-inventory{padding:12px;gap:8px}
+.mobile-ui .tg-inventory>span:first-child{width:100%;font-size:11px}
+.mobile-ui #tg-selection{width:100%;margin:0;font-size:13px}
+.mobile-ui .tg-targets{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px}
+.mobile-ui #tengra-demo .tg-targets button{font-size:14px;padding:10px}
+.mobile-ui .tg-dialogue{padding:18px 16px}
+.mobile-ui #tg-line{font-size:19px;line-height:1.6}
+.mobile-ui #tg-choices{flex-direction:column}
+.mobile-ui #tengra-demo #tg-choices button{flex:auto;min-height:50px;padding:12px 14px}
+.mobile-ui #tg-scene-label{font-size:10px;left:6px;bottom:5px;padding:4px 6px}
+.mobile-ui #tg-cinematic{padding:30px 12px 12px}
+.mobile-ui #tg-beat-title{font-size:23px;margin-bottom:7px}
+.mobile-ui #tg-beat-text{font-size:12px;line-height:1.5}
+.mobile-ui #tg-beat-kicker{font-size:9px}
+.mobile-ui #tengra-demo.tg-inspecting>:not(#tg-detail){display:none!important}
+.mobile-ui .tg-detail{position:relative;inset:auto;display:block;padding:0;background:#1b1224;backdrop-filter:none;min-height:520px}
+.mobile-ui .tg-detail>section{padding:60px 18px 20px;width:100%;max-height:none;overflow:visible;box-shadow:none;border:0}
+.mobile-ui .tg-detail h2{font-size:26px;margin-right:0}
+.mobile-ui .tg-detail p{font-size:16px}
+.mobile-ui .tg-closeup{height:170px}
+.mobile-ui #tg-detail-actions{flex-direction:column}
+.mobile-ui #tg-detail-actions button{flex:auto;width:100%}
+@media(prefers-reduced-motion:reduce){#tengra-demo *,#tengra-demo *:before,#tengra-demo *:after{animation:none!important;transition:none!important}}

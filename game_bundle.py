@@ -7,6 +7,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 SCENE = "corlex-cargo-berth-concept.png"
 COVER = "cover.png"
+TENGRA = "tengra-apartment.png"
+AFTERMATH = "tengra-aftermath.png"
 
 
 def build_game_html(root: Path = ROOT, *, device_hint: str = "unknown", layout_mode: str = "auto") -> str:
@@ -17,10 +19,11 @@ def build_game_html(root: Path = ROOT, *, device_hint: str = "unknown", layout_m
     if layout_mode not in {"auto", "mobile", "desktop"}:
         raise ValueError("Invalid layout mode")
     page = page.replace('<html lang="en">', f'<html lang="en" data-device-hint="{device_hint}" data-layout-mode="{layout_mode}">')
-    for filename in ("style.css", "interactions.css", "opening.css", "mobile.css"):
+    for filename in ("style.css", "interactions.css", "opening.css", "mobile.css", "tengra.css"):
         css = (root / filename).read_text(encoding="utf-8-sig")
         css = css.replace(f"url('{SCENE}')", "var(--scene-image)")
         css = css.replace(f'url("{SCENE}")', "var(--scene-image)")
+        css = css.replace(f"url('{TENGRA}')", "var(--tengra-image)")
         page = page.replace(
             f'<link rel="stylesheet" href="{filename}">',
             f"<style>\n{css}\n</style>",
@@ -46,6 +49,20 @@ body { justify-content: flex-start; }
         "document.getElementById('scene').src = bundledSceneUrl;\n"
     )
     page = page.replace(f'src="{SCENE}"', 'data-bundled-scene="true"')
+    for filename, element_id, css_variable in (
+        (TENGRA, "tg-art", "--tengra-image"),
+        (AFTERMATH, "tg-aftermath", None),
+    ):
+        asset = base64.b64encode((root / filename).read_bytes()).decode("ascii")
+        variable = "asset_" + element_id.replace("-", "_")
+        bootstrap += f"const {variable} = {json.dumps('data:image/png;base64,' + asset)};\n"
+        bootstrap += f"document.getElementById({json.dumps(element_id)}).src = {variable};\n"
+        if css_variable:
+            bootstrap += (
+                f"document.documentElement.style.setProperty({json.dumps(css_variable)}, "
+                f"'url(\"' + {variable} + '\")');\n"
+            )
+        page = page.replace(f'src="{filename}"', f'data-bundled-asset="{element_id}"')
     cover = base64.b64encode((root / COVER).read_bytes()).decode("ascii")
     page = page.replace(f'src="{COVER}"', f'src="data:image/png;base64,{cover}"')
     script = (root / "game-v2.js").read_text(encoding="utf-8-sig")
@@ -56,4 +73,6 @@ body { justify-content: flex-start; }
     )
     device_script = (root / "device.js").read_text(encoding="utf-8-sig").replace("</script", "<\\/script")
     page = page.replace('<script src="device.js"></script>', f"<script>\n{device_script}\n</script>")
+    encounter_script = (root / "tengra.js").read_text(encoding="utf-8-sig").replace("</script", "<\\/script")
+    page = page.replace('<script src="tengra.js"></script>', f"<script>\n{encounter_script}\n</script>")
     return page

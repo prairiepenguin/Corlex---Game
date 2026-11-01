@@ -8,7 +8,7 @@ from device_layout import detect_device
 
 def main() -> None:
     st.set_page_config(
-        page_title="Corlex · Death Bringer",
+        page_title="Corlex · Playable Demos",
         page_icon="🪐",
         layout="wide",
         initial_sidebar_state="collapsed",
@@ -32,7 +32,11 @@ def main() -> None:
             "and touch support, including when you rotate the screen."
         )
         st.markdown(
-            "Start with the **duffel by the bunk**. Click objects to investigate, "
+            "Choose **Play the confrontation** on the cover screen for the Tengra "
+            "demo. Inspect the emitter and clock, talk to Amanda, and find a distraction. "
+            "There is no reflex timer. The optional Sound button enables quiet effects.\n\n"
+            "For the cargo-room demo, choose **Begin investigation** and start with "
+            "the **duffel by the bunk**. Click objects to investigate, "
             "collect equipment, and solve the case. Select an inventory item, "
             "then an object to use it.\n\n"
             "**H** reveals hotspots · **J** opens your notebook · "

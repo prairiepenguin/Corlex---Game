@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="interactions.css">
   <link rel="stylesheet" href="opening.css">
   <link rel="stylesheet" href="mobile.css">
+  <link rel="stylesheet" href="tengra.css">
 </head>
 <body>
 <p id="device-status" class="device-status" aria-live="polite"></p>
@@ -17,7 +18,15 @@
     <p class="opening-kicker">A POINT-AND-CLICK ADVENTURE</p>
     <h1 id="opening-title">Corlex</h1>
     <p class="opening-subtitle">Titan and the Reaper</p>
-    <p class="opening-story">One cramped berth. One dangerous bounty.<br>A hundred thousand reasons to investigate.</p>
+    <p class="opening-story">One dangerous bounty.<br>Two ways into Corlex’s world.</p>
+    <div class="demo-choice">
+      <p class="demo-label">NEW DEMO · TENGRA BUILDING</p>
+      <h2>Face the Reaper</h2>
+      <p>You are pinned behind a kitchen island. Amanda has a gun, a deadline, and very little patience. Observe the room, talk your way into a truce, and create an opening.</p>
+      <button id="start-tengra" type="button">Play the confrontation →</button>
+      <small>No timer. Mouse and touch supported.</small>
+    </div>
+    <p class="demo-label">DEATH BRINGER · INVESTIGATION DEMO</p>
     <h2>Your first move</h2>
     <p>Open the <strong>duffel beside the bunk</strong> and collect your earpiece and notebook. Then find a way to get Mike connected to the hypernet.</p>
     <ol class="opening-steps">
@@ -69,8 +78,31 @@
   </div>
   <div id="departure" class="veil" hidden><section><p class="eyebrow">INVESTIGATION COMPLETE</p><h1>Next stop: Titan.</h1><p>The door slides open. Corlex pockets the case file and steps into the tanker’s cold corridor.</p><p class="success">Amanda. Special Forces. The Reaper.</p><p>You have a name. Now you have to find her.</p><button id="return-room" class="large-action">Return to the berth</button></section></div>
 </main>
+<main id="tengra-demo" aria-label="Tengra apartment confrontation" hidden>
+  <header class="tg-heading"><div><p>CHAPTER 19 / ANGEL CITY</p><h1>A moment of silence.</h1></div><div class="tg-header-actions"><button id="tg-sound" type="button" aria-pressed="false">Sound off</button><button id="tg-title" type="button">Title screen</button></div></header>
+  <div class="tg-status"><span id="tg-objective"></span><span id="tg-pressure" aria-live="polite"></span></div>
+  <div class="tg-layout">
+    <div class="tg-scene-column">
+      <div id="tg-stage" class="tg-stage">
+        <img id="tg-art" src="tengra-apartment.png" alt="Corlex takes cover behind a marble island while Amanda aims her pistol. A suppression emitter sits on the coffee table; a clock hangs by the broken door, with stormy Angel City beyond the windows.">
+        <img id="tg-aftermath" src="tengra-aftermath.png" alt="Amanda kneels alive beside the armchair, her mechanical hand glowing cyan and her pistol on the floor. Corlex keeps his stunner lowered behind the island.">
+        <div class="tg-sound-field" aria-hidden="true"></div>
+        <div id="tg-hotspots" aria-label="Apartment objects"></div>
+        <span id="tg-scene-label">Behind the island · stay low</span>
+        <div id="tg-cup-flight" aria-hidden="true">◒</div>
+        <div id="tg-cinematic" hidden><p id="tg-beat-kicker"></p><h2 id="tg-beat-title"></h2><p id="tg-beat-text"></p></div>
+      </div>
+      <div class="tg-inventory" aria-label="Encounter equipment"><span>EQUIPMENT</span><button id="tg-stunner" type="button" aria-pressed="false">◈ Stunner</button><button id="tg-cup" type="button" aria-pressed="false" disabled>○ Cup · not collected</button><span id="tg-selection">Select gear, then a target.</span></div>
+      <div id="tg-targets" class="tg-targets" aria-label="Apartment target buttons"></div>
+    </div>
+    <aside class="tg-case"><p class="tg-eyebrow">READ THE ROOM</p><h2>One opening.<br>Make it count.</h2><ul id="tg-clues"></ul><button id="tg-hint" type="button">Ask Mike for a hint</button><button id="tg-plan" type="button">Make your move</button><button id="tg-reset" type="button">Restart encounter</button><p class="tg-small">Your progress saves separately from the cargo-room demo.</p></aside>
+  </div>
+  <section class="tg-dialogue" aria-label="Encounter dialogue"><p id="tg-speaker" class="tg-eyebrow">AMANDA</p><p id="tg-line" aria-live="polite">Who the hell are you?</p><div id="tg-choices"></div></section>
+  <div id="tg-detail" class="tg-detail" hidden><section role="dialog" aria-modal="true" aria-labelledby="tg-detail-title"><button id="tg-close" aria-label="Close inspection" type="button">×</button><p class="tg-eyebrow">CORLEX / OBSERVATION</p><h2 id="tg-detail-title"></h2><div id="tg-detail-body"></div><div id="tg-detail-actions"></div></section></div>
+</main>
 <p id="game-instructions" class="instructions" hidden>Click to investigate · Select an item, then an object to use it · <kbd>1</kbd> Look <kbd>2</kbd> Use <kbd>3</kbd> Talk · <kbd>H</kbd> Hints · <kbd>J</kbd> Journal · <kbd>Esc</kbd> Cancel · <button id="title-screen" type="button">Title screen</button></p>
 <script src="device.js"></script>
 <script src="game-v2.js"></script>
+<script src="tengra.js"></script>
 </body>
 </html>

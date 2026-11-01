@@ -5,7 +5,7 @@ from pathlib import Path
 
 from streamlit.testing.v1 import AppTest
 
-from game_bundle import ROOT, SCENE, COVER, build_game_html
+from game_bundle import ROOT, SCENE, COVER, TENGRA, AFTERMATH, build_game_html
 from device_layout import detect_device
 
 
@@ -43,14 +43,17 @@ class StreamlitGameTests(unittest.TestCase):
         self.assertIn("function dossier()", page)
         self.assertIn("#game { width: 100%;", page)
         images = re.findall(r"data:image/png;base64,([A-Za-z0-9+/=]+)", page)
-        self.assertEqual(len(images), 2)
+        self.assertEqual(len(images), 4)
         self.assertEqual(
             {base64.b64decode(image) for image in images},
-            {(ROOT / SCENE).read_bytes(), (ROOT / COVER).read_bytes()},
+            {(ROOT / filename).read_bytes() for filename in (SCENE, COVER, TENGRA, AFTERMATH)},
         )
         self.assertIn('id="opening"', page)
         self.assertIn('id="start-game"', page)
         self.assertNotIn('src="cover.png"', page)
+        self.assertIn('id="tengra-demo"', page)
+        self.assertIn('id="start-tengra"', page)
+        self.assertNotIn('src="tengra-apartment.png"', page)
 
     def test_streamlit_app_starts_and_embeds_game(self):
         app = AppTest.from_file(str(ROOT / "streamlit_app.py"), default_timeout=20).run()
